@@ -40,5 +40,11 @@ public class PlayerController : MonoBehaviour {
         pos.x = Mathf.Floor(pos.x+0.5f);
         pos.y = Mathf.Floor(pos.y+0.5f);
         other.gameObject.transform.localPosition = pos;
+
+		GameObject cam = GameObject.FindGameObjectWithTag ("MainCamera");
+		Camera camera = cam.GetComponent<Camera> ();
+		if (camera != null) {
+			camera.orthographicSize += 0.1f;
+		}
     }
 }
