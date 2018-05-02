@@ -1,31 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PlayerGrid
-{
-    int[,] cells = new int[64, 64];
-
-    PlayerGrid()
-    {
-        
-    }
-
-    
-}
-
-public class Kreuz {
-	int x;
-	int y;
-
-	int top;
-	int bottom;
-	int left;
-	int right;
-
-	public Kreuz() {
-	}
-}
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
