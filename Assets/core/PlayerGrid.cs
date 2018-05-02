@@ -6,13 +6,12 @@ namespace Eblomino
 {
     public class PlayerGrid
     {
-        private int width = 128;
-        private List<Kreuz> grid;
+        private int _width = 128;
+        private Kreuz[] _grid;
 
         public PlayerGrid()
         {
-            grid = new List<Kreuz>(width * width);
-            grid.AddRange(Enumerable.Repeat<Kreuz>(null, width * width));
+            _grid = new Kreuz[_width * _width];
             Init(0, 0);
             Init(0, 1);
             Init(1, 0);
@@ -26,23 +25,23 @@ namespace Eblomino
 
         private Kreuz this[int x, int y]
         {
-            get { return grid[GetAddress(x, y)]; }
+            get { return _grid[GetAddress(x, y)]; }
             set
             {
-                if (x <= -width / 2 || x >= width / 2 || y <= -width / 2 || y >= width / 2)
+                if (x <= -_width / 2 || x >= _width / 2 || y <= -_width / 2 || y >= _width / 2)
                 {
                     // TODO: resize
                     throw new InvalidOperationException();
                 }
 
                 var address = GetAddress(x, y);
-                grid[address] = value;
+                _grid[address] = value;
             }
         }
 
         private int GetAddress(int x, int y)
         {
-            return x + width / 2 + (y + width / 2) * width;
+            return x + _width / 2 + (y + _width / 2) * _width;
         }
     }
 }

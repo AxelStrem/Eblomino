@@ -2,15 +2,17 @@
 {
     public class Kreuz
     {
-        int x;
-        int y;
+        private int _x;
+        private int _y;
 
-        int top;
-        int bottom;
-        int left;
-        int right;
+        private int _top;
+        private int _bottom;
+        private int _left;
+        private int _right;
 
-        public Kreuz() {
-        }
+        private int _topRightMin;
+        private int _topLeftMin;
+        private int _bottomLeftMin;
+        private int _bottomRightMin;
     }
 }
