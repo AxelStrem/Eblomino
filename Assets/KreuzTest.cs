@@ -9,7 +9,7 @@ namespace Eblomino
         [Test]
         public void KreuzSimplePasses()
         {
-            new Kreuz();
+            new PlayerGrid();
             Assert.IsTrue(true);
         }
 
