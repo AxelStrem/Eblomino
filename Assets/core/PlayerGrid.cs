@@ -17,7 +17,7 @@ namespace Eblomino
             Init(1, 1);
         }
 
-        void Init(int x, int y)
+        public void Init(int x, int y)
         {
             var kreuz = new Kreuz(x, y);
             kreuz.Left = OffsetLength(x, y, -1, 0);
@@ -36,6 +36,11 @@ namespace Eblomino
                 Console.WriteLine("Square at " + pair.First + " @ " + pair.Second);   
             }
             this[x, y] = kreuz;
+        }
+
+        public bool Exists(int x, int y)
+        {
+            return this[x, y] != null;
         }
 
         public void Print()
