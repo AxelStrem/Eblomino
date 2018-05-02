@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Eblomino
 {
@@ -29,6 +28,13 @@ namespace Eblomino
             UpdateNeigborsX(x, y, -1, kreuz.Right + 1);
             UpdateNeigborsY(x, y, 1, kreuz.Bottom + 1);
             UpdateNeigborsY(x, y, -1, kreuz.Top + 1);
+            var output = new List<Pair<Kreuz, Kreuz>>();
+            FindKreuzeX(output, x - kreuz.Left, x + kreuz.Right, y);
+            FindKreuzeY(output, x, y - kreuz.Bottom, y + kreuz.Top);
+            foreach (var pair in output)
+            {
+                Console.WriteLine("Square at " + pair.First + " @ " + pair.Second);   
+            }
             this[x, y] = kreuz;
         }
 
@@ -38,8 +44,55 @@ namespace Eblomino
             {
                 if (kreuz != null)
                 {
-                    Console.WriteLine("Kreuz at [" + kreuz.X + ", " + kreuz.Y + "] (↑" + kreuz.Top + ", ↓" + kreuz.Bottom +
-                                      ", →" + kreuz.Right + ", ←" + kreuz.Left + " )");
+                    Console.WriteLine("Kreuz at " + kreuz);
+                }
+            }
+        }
+        
+        private void FindKreuzeX(List<Pair<Kreuz, Kreuz>> output, int startX, int endX, int y) {
+            for (var x = startX; x <= endX; x++)
+            {
+                var kreuz = this[x, y];
+                if (kreuz == null) continue;
+                for (var delta = 1; delta <= kreuz.TopRightMin; delta++)
+                {
+                    var otherKreuz = this[x + delta, y + delta];
+                    if (otherKreuz != null && otherKreuz.Bottom <= delta && otherKreuz.Left <= delta)
+                    {
+                        output.Add(new Pair<Kreuz, Kreuz>(kreuz, otherKreuz));
+                    }
+                }
+                for (var delta = 1; delta <= kreuz.BottomRightMin; delta++)
+                {
+                    var otherKreuz = this[x + delta, y - delta];
+                    if (otherKreuz != null && otherKreuz.Top <= delta && otherKreuz.Left <= delta)
+                    {
+                        output.Add(new Pair<Kreuz, Kreuz>(kreuz, otherKreuz));
+                    }
+                }
+            }
+        }
+        
+        private void FindKreuzeY(List<Pair<Kreuz, Kreuz>> output, int x, int startY, int endY) {
+            for (var y = startY; x <= endY; x++)
+            {
+                var kreuz = this[x, y];
+                if (kreuz == null) continue;
+                for (var delta = 1; delta <= kreuz.BottomRightMin; delta++)
+                {
+                    var otherKreuz = this[x + delta, y + delta];
+                    if (otherKreuz != null && otherKreuz.Bottom <= delta && otherKreuz.Left <= delta)
+                    {
+                        output.Add(new Pair<Kreuz, Kreuz>(kreuz, otherKreuz));
+                    }
+                }
+                for (var delta = 1; delta <= kreuz.BottomLeftMin; delta++)
+                {
+                    var otherKreuz = this[x + delta, y - delta];
+                    if (otherKreuz != null && otherKreuz.Top <= delta && otherKreuz.Right <= delta)
+                    {
+                        output.Add(new Pair<Kreuz, Kreuz>(kreuz, otherKreuz));
+                    }
                 }
             }
         }
