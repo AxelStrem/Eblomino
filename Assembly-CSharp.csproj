@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\core\Kreuz.cs" />
+     <Compile Include="Assets\core\Pair.cs" />
      <Compile Include="Assets\core\PlayerGrid.cs" />
      <Compile Include="Assets\EblominoController.cs" />
      <Compile Include="Assets\GameController.cs" />
