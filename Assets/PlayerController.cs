@@ -14,7 +14,7 @@ public class PlayerGrid
     
 }
 
-public class Hackenkreuz {
+public class Kreuz {
 	int x;
 	int y;
 
@@ -23,7 +23,7 @@ public class Hackenkreuz {
 	int left;
 	int right;
 
-	public Hackenkreuz() {
+	public Kreuz() {
 	}
 }
 

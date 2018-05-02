@@ -4,10 +4,10 @@ using UnityEngine.TestTools;
 
 namespace Eblomino
 {
-    public class Hackentest
+    public class KreuzTest
     {
         [Test]
-        public void HackentestSimplePasses()
+        public void KreuzSimplePasses()
         {
             // Use the Assert class to test conditions.
             
@@ -16,7 +16,7 @@ namespace Eblomino
         // A UnityTest behaves like a coroutine in PlayMode
         // and allows you to yield null to skip a frame in EditMode
         /*[UnityTest]
-        public IEnumerator HackentestWithEnueratorPasses()
+        public IEnumerator KreuzTestWithEnueratorPasses()
         {
             // Use the Assert class to test conditions.
             // yield to skip a frame
