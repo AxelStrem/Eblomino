@@ -7,14 +7,11 @@ namespace Eblomino
     {
         private int _width = 128;
         private Kreuz[] _grid;
+        private readonly List<IGridListener> _listeners = new List<IGridListener>(4);
 
         public PlayerGrid()
         {
             _grid = new Kreuz[_width * _width];
-            NewCell(0, 0);
-            NewCell(0, 1);
-            NewCell(1, 0);
-            NewCell(1, 1);
         }
 
         public Kreuz NewCell(int x, int y)
@@ -33,15 +30,22 @@ namespace Eblomino
             FindKreuzeY(output, x, y - kreuz.Bottom, y + kreuz.Top);
             foreach (var pair in output)
             {
-                Console.WriteLine("Square at " + pair.First + " @ " + pair.Second);   
+                _listeners.ForEach(l => l.onSquareFound(pair.First, pair.Second));
             }
+
             this[x, y] = kreuz;
+            _listeners.ForEach(l => l.onCellCreated(kreuz));
             return kreuz;
         }
 
         public bool Exists(int x, int y)
         {
             return this[x, y] != null;
+        }
+
+        public void AddListener(IGridListener listener)
+        {
+            _listeners.Add(listener);
         }
 
         public void Print()
@@ -54,8 +58,9 @@ namespace Eblomino
                 }
             }
         }
-        
-        private void FindKreuzeX(List<Pair<Kreuz, Kreuz>> output, int startX, int endX, int y) {
+
+        private void FindKreuzeX(List<Pair<Kreuz, Kreuz>> output, int startX, int endX, int y)
+        {
             for (var x = startX; x <= endX; x++)
             {
                 var kreuz = this[x, y];
@@ -68,6 +73,7 @@ namespace Eblomino
                         output.Add(new Pair<Kreuz, Kreuz>(kreuz, otherKreuz));
                     }
                 }
+
                 for (var delta = 1; delta <= kreuz.BottomRightMin; delta++)
                 {
                     var otherKreuz = this[x + delta, y - delta];
@@ -78,8 +84,9 @@ namespace Eblomino
                 }
             }
         }
-        
-        private void FindKreuzeY(List<Pair<Kreuz, Kreuz>> output, int x, int startY, int endY) {
+
+        private void FindKreuzeY(List<Pair<Kreuz, Kreuz>> output, int x, int startY, int endY)
+        {
             for (var y = startY; x <= endY; x++)
             {
                 var kreuz = this[x, y];
@@ -92,6 +99,7 @@ namespace Eblomino
                         output.Add(new Pair<Kreuz, Kreuz>(kreuz, otherKreuz));
                     }
                 }
+
                 for (var delta = 1; delta <= kreuz.BottomLeftMin; delta++)
                 {
                     var otherKreuz = this[x + delta, y - delta];
@@ -102,7 +110,7 @@ namespace Eblomino
                 }
             }
         }
-        
+
         private void UpdateNeigborsX(int x, int y, int deltaX, int delta)
         {
             x += deltaX;
@@ -117,11 +125,12 @@ namespace Eblomino
                 {
                     neighbor.Left += delta;
                 }
+
                 x += deltaX;
                 neighbor = this[x, y];
             }
         }
-        
+
         private void UpdateNeigborsY(int x, int y, int deltaY, int delta)
         {
             y += deltaY;
@@ -136,6 +145,7 @@ namespace Eblomino
                 {
                     neighbor.Bottom += delta;
                 }
+
                 y += deltaY;
                 neighbor = this[x, y];
             }
