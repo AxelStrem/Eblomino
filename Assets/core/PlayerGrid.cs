@@ -11,13 +11,13 @@ namespace Eblomino
         public PlayerGrid()
         {
             _grid = new Kreuz[_width * _width];
-            Init(0, 0);
-            Init(0, 1);
-            Init(1, 0);
-            Init(1, 1);
+            NewCell(0, 0);
+            NewCell(0, 1);
+            NewCell(1, 0);
+            NewCell(1, 1);
         }
 
-        public void Init(int x, int y)
+        public Kreuz NewCell(int x, int y)
         {
             var kreuz = new Kreuz(x, y);
             kreuz.Left = OffsetLength(x, y, -1, 0);
@@ -36,6 +36,7 @@ namespace Eblomino
                 Console.WriteLine("Square at " + pair.First + " @ " + pair.Second);   
             }
             this[x, y] = kreuz;
+            return kreuz;
         }
 
         public bool Exists(int x, int y)
