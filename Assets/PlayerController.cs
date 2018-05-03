@@ -6,8 +6,12 @@ public class PlayerController : MonoBehaviour {
     public float rotation_speed;
 
     private Rigidbody rb;
+
+	private Eblomino.PlayerGrid grid;
+
     // Use this for initialization
     void Start () {
+		grid = new Eblomino.PlayerGrid();
         rb = gameObject.GetComponent<Rigidbody>();
         //rb.velocity = new Vector3(1.0f, 0.0f, 0.0f);
 	}
@@ -29,8 +33,6 @@ public class PlayerController : MonoBehaviour {
     {
         EblominoController ec = other.gameObject.transform.parent.gameObject.GetComponent<EblominoController>();
 
-        
-
         other.gameObject.transform.SetParent(transform);
         Vector3 ea = other.gameObject.transform.localEulerAngles;
         ea.z = 0.0f;
@@ -40,6 +42,13 @@ public class PlayerController : MonoBehaviour {
         pos.x = Mathf.Floor(pos.x+0.5f);
         pos.y = Mathf.Floor(pos.y+0.5f);
         other.gameObject.transform.localPosition = pos;
+
+		int x = (int)pos.x;
+		int y = (int)pos.y;
+
+		if (!grid.Exists (x, y)) {
+			grid.Init (x, y);
+		}
 
 		GameObject cam = GameObject.FindGameObjectWithTag ("MainCamera");
 		Camera camera = cam.GetComponent<Camera> ();
