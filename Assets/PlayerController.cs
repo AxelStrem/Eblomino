@@ -1,19 +1,30 @@
 ﻿using UnityEngine;
+using Eblomino;
 
 public class PlayerController : MonoBehaviour {
 
+	class LogPrintingGridListener : IGridListener
+	{
+		public void onCellCreated(Kreuz cell)
+		{
+			Debug.Log("Kreuz at " + cell);
+		}
+
+		public void onSquareFound(Kreuz first, Kreuz second)
+		{
+			Debug.Log("Square at " + first + " @ " + second);
+		}
+	}
+
     public float speed;
     public float rotation_speed;
-
-    private Rigidbody rb;
 
 	private Eblomino.PlayerGrid grid;
 
     // Use this for initialization
     void Start () {
 		grid = new Eblomino.PlayerGrid();
-        rb = gameObject.GetComponent<Rigidbody>();
-        //rb.velocity = new Vector3(1.0f, 0.0f, 0.0f);
+		grid.AddListener(new LogPrintingGridListener());
 	}
 	
 	// Update is called once per frames
@@ -47,7 +58,7 @@ public class PlayerController : MonoBehaviour {
 		int y = (int)pos.y;
 
 		if (!grid.Exists (x, y)) {
-			grid.Init (x, y);
+			grid.NewCell (x, y);
 		}
 
 		GameObject cam = GameObject.FindGameObjectWithTag ("MainCamera");
